@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            background: white;
+            border-radius: 25px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+            border: 3px solid #ff6b9d;
+        }
+
+        h1 {
+            color: #ff4281;
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            letter-spacing: 1px;
+        }
+        h2 {
+            color: #ff4281;
+        }
+
+        .cat-illustration {
+            width: 280px;
+            height: 290px;
+            margin: 20px auto;
+            position: relative;
+            background: #fff5f8;
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px dashed #ffb8d9;
+        }
+
+        .cat {
+            width: 160px;
+            height: 150px;
+            background: #ffccd5;
+            border-radius: 50% 50% 40% 40%;
+            position: absolute;
+            top: 50px;
+            left: 60px;
+            overflow: hidden;
+        }
+
+        .cat-ears {
+            position: absolute;
+            width: 100%;
+            top: -15px;
+        }
+
+        .ear {
+            width: 40px;
+            height: 50px;
+            background: #ffccd5;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .ear-left {
+            left: 30px;
+            transform: rotate(-25deg);
+        }
+
+        .ear-right {
+            right: 30px;
+            transform: rotate(25deg);
+        }
+
+        .inner-ear {
+            width: 25px;
+            height: 35px;
+            background: #ff9ebb;
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            left: 7px;
+        }
+
+        .cat-face {
+            position: absolute;
+            width: 100%;
+            top: 40px;
+        }
+
+        .eyes {
+            display: flex;
+            justify-content: space-around;
+            padding: 0 35px;
+        }
+
+        .eye {
+            width: 30px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #000000;
+        }
+
+        .pupil {
+            width: 20px;
+            height: 30px;
+            background: #000000;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: 6px;
+        }
+
+        .nose {
+            width: 25px;
+            height: 15px;
+            background: #ff9ebb;
+            border-radius: 50%;
+            margin: 10px auto;
+        }
+
+        .whiskers {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px;
+            margin-top: 5px;
+        }
+
+        .whisker {
+            height: 1px;
+            width: 30px;
+            background: #ff9ebb;
+            top: 20px;
+        }
+
+        .heart-emoji {
+            font-size: 100px;
+            position: absolute;
+            right: 50px;
+            top: 90px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .cat-arms {
+            position: absolute;
+            width: 180px;
+            top: 110px;
+            left: 40px;
+            z-index: 2;
+        }
+
+        .arm {
+            width: 60px;
+            height: 25px;
+            background: #ffccd5;
+            border-radius: 20px;
+            position: absolute;
+        }
+
+        .arm-left {
+            left: 0;
+            transform: rotate(30deg);
+        }
+
+        .arm-right {
+            right: 0;
+            transform: rotate(-30deg);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.8rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 140px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .yes-btn {
+            background: linear-gradient(45deg, #ff4081, #ff6b9d);
+            color: white;
+            order: 1;
+        }
+
+        .no-btn {
+            background: linear-gradient(45deg, #7c7c7c, #a5a5a5);
+            color: white;
+            position: relative;
+            transition: none;
+            order: 2;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: var(--c);
+            top: 0;
+            opacity: 0;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .cat-illustration { width: 250px; height: 250px; }
+            .cat { width: 140px; height: 120px; left: 55px; }
+            .btn { padding: 16px 30px; font-size: 1.5rem; min-width: 120px; }
+            .buttons { gap: 20px; }
+            .heart-emoji { font-size: 80px; right: 40px; top: 60px; }
+        }
+
+        @media (max-width: 400px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 1.8rem; }
+            .buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; max-width: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <P><h2>OCLIS' VALENTINE PROPOSAL</h2></P>
+    <div class="container">
+        <h1>WILL YOU BE MY VALENTINE?</h1>
+        
+        <div class="cat-illustration">
+            <div class="cat">
+                <div class="cat-ears">
+                    <div class="ear ear-left">
+                        <div class="inner-ear"></div>
+                    </div>
+                    <div class="ear ear-right">
+                        <div class="inner-ear"></div>
+                    </div>
+                </div>
+                <div class="cat-face">
+                    <div class="eyes">
+                        <div class="eye">
+                            <div class="pupil"></div>
+                        </div>
+                        <div class="eye">
+                            <div class="pupil"></div>
+                        </div>
+                    </div>
+                    <div class="nose"></div>
+                    <div class="whiskers">
+                        <div class="whisker"></div>
+                        <div class="whisker"></div>
+                        <div class="whisker"></div>
+                        <div class="whisker"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="cat-arms">
+                <div class="arm arm-left"></div>
+                <div class="arm arm-right"></div>
+            </div>
+            <div class="heart-emoji">❤️</div>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn yes-btn">YES!</button>
+            <button class="btn no-btn">NO</button>
+        </div>
+    </div>
+
+    <script>
+        const noButton = document.querySelector('.no-btn');
+        const yesButton = document.querySelector('.yes-btn');
+        const container = document.querySelector('.container');
+        let runAwayCount = 0;
+        const maxRunAway = 10;
+
+        // Make No button run away when clicked
+        noButton.addEventListener('click', function(e) {
+            runAwayCount++;
+            
+            // Make button run away
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noButton.getBoundingClientRect();
+            const maxX = containerRect.width - buttonRect.width - 20;
+            const maxY = containerRect.height - buttonRect.height - 20;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noButton.style.position = 'absolute';
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+            
+            // Change button text after a few clicks
+            if (runAwayCount === 3) {
+                noButton.textContent = "Are you sure?";
+                noButton.style.background = "linear-gradient(45deg, #ff9a00, #ffcc00)";
+            } else if (runAwayCount === 6) {
+                noButton.textContent = "Please say yes!";
+                noButton.style.background = "linear-gradient(45deg, #ff4081, #ff6b9d)";
+                noButton.style.color = "white";
+            } else if (runAwayCount >= maxRunAway) {
+                noButton.textContent = "OK FINE";
+                noButton.style.background = "linear-gradient(45deg, #00c853, #64dd17)";
+                // Move No button next to Yes button
+                noButton.style.position = 'static';
+                noButton.style.order = '3';
+                document.querySelector('.buttons').style.flexWrap = 'wrap';
+            }
+            
+            // Prevent default form submission
+            e.preventDefault();
+        });
+
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#ff4081', '#ff6b9d', '#ffcc00', '#00c853', '#2196f3', '#9c27b0'];
+            const confettiCount = 200;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.setProperty('--c', colors[Math.floor(Math.random() * colors.length)]);
+                confetti.style.animation = `pop ${0.5 + Math.random() * 1}s forwards`;
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 2000);
+            }
+        }
+
+        // Yes button celebration
+        yesButton.addEventListener('click', function() {
+            // Create confetti
+            createConfetti();
+            
+            // Change title
+            document.querySelector('h1').textContent = "YAY! YOU'RE MY VALENTINE! 💖";
+            document.querySelector('h1').style.color = "#00c853";
+            
+            // Change heart color
+            document.querySelector('.heart-emoji').textContent = "💝";
+            document.querySelector('.heart-emoji').style.animation = "none";
+            document.querySelector('.heart-emoji').style.fontSize = "120px";
+            
+            // Hide buttons
+            yesButton.style.display = 'none';
+            noButton.style.display = 'none';
+            
+            // Create celebration message
+            const celebration = document.createElement('div');
+            celebration.style.marginTop = "30px";
+            celebration.style.fontSize = "1.8rem";
+            celebration.style.color = "#ff4081";
+            celebration.style.fontWeight = "bold";
+            celebration.innerHTML = "🎉 Best decision ever! I love you! 🎉";
+            container.appendChild(celebration);
+            
+            // Add floating hearts animation
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.textContent = '💖';
+                    heart.style.position = 'fixed';
+                    heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '100vh';
+                    heart.style.zIndex = '5';
+                    heart.style.animation = `floatUp ${2 + Math.random() * 2}s linear forwards`;
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 100);
+            }
+            
+            // Add floating animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes floatUp {
+                    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // Make page responsive on resize
+        window.addEventListener('resize', function() {
+            if (runAwayCount < maxRunAway) {
+                noButton.style.position = 'static';
+            }
+        });
+    </script>
+</body>
+</html>
